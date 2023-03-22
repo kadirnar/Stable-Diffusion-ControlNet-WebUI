@@ -1,0 +1,8 @@
+transformers 
+bitsandbytes==0.35.0 
+xformers 
+controlnet_aux 
+diffusers
+imageio
+gradio
+triton
