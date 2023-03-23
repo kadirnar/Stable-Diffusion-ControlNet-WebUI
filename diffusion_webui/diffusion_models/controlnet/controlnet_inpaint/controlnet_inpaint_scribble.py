@@ -3,9 +3,11 @@ import numpy as np
 import torch
 from controlnet_aux import HEDdetector
 from diffusers import ControlNetModel
-from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import StableDiffusionControlNetInpaintPipeline
 from PIL import Image
 
+from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import (
+    StableDiffusionControlNetInpaintPipeline,
+)
 from diffusion_webui.utils.model_list import (
     controlnet_scribble_model_list,
     stable_inpiant_model_list,
@@ -17,6 +19,7 @@ from diffusion_webui.utils.scheduler_list import (
 
 # https://github.com/mikonvergence/ControlNetInpaint
 
+
 class StableDiffusionControlNetInpaintScribbleGenerator:
     def __init__(self):
         self.pipe = None
@@ -27,11 +30,13 @@ class StableDiffusionControlNetInpaintScribbleGenerator:
                 controlnet_model_path, torch_dtype=torch.float16
             )
 
-            self.pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained(
-                pretrained_model_name_or_path=stable_model_path,
-                controlnet=controlnet,
-                safety_checker=None,
-                torch_dtype=torch.float16,
+            self.pipe = (
+                StableDiffusionControlNetInpaintPipeline.from_pretrained(
+                    pretrained_model_name_or_path=stable_model_path,
+                    controlnet=controlnet,
+                    safety_checker=None,
+                    torch_dtype=torch.float16,
+                )
             )
 
         self.pipe = get_scheduler_list(pipe=self.pipe, scheduler=scheduler)
@@ -39,7 +44,7 @@ class StableDiffusionControlNetInpaintScribbleGenerator:
         self.pipe.enable_xformers_memory_efficient_attention()
 
         return self.pipe
-    
+
     def load_image(self, image_path):
         image = np.array(image_path)
         image = Image.fromarray(image)
@@ -70,11 +75,13 @@ class StableDiffusionControlNetInpaintScribbleGenerator:
     ):
         normal_image = image_path["image"].convert("RGB").resize((512, 512))
         mask_image = image_path["mask"].convert("RGB").resize((512, 512))
-        
+
         normal_image = self.load_image(image_path=normal_image)
         mask_image = self.load_image(image_path=mask_image)
-        
-        controlnet_image = self.controlnet_inpaint_scribble(image_path=image_path)
+
+        controlnet_image = self.controlnet_inpaint_scribble(
+            image_path=image_path
+        )
 
         pipe = self.load_model(
             stable_model_path=stable_model_path,

@@ -2,10 +2,12 @@ import gradio as gr
 import numpy as np
 import torch
 from diffusers import ControlNetModel
-from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import StableDiffusionControlNetInpaintPipeline
 from PIL import Image
 from transformers import pipeline
 
+from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import (
+    StableDiffusionControlNetInpaintPipeline,
+)
 from diffusion_webui.utils.model_list import (
     controlnet_depth_model_list,
     stable_inpiant_model_list,
@@ -27,11 +29,13 @@ class StableDiffusionControlInpaintNetDepthGenerator:
             controlnet = ControlNetModel.from_pretrained(
                 controlnet_model_path, torch_dtype=torch.float16
             )
-            self.pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained(
-                pretrained_model_name_or_path=stable_model_path,
-                controlnet=controlnet,
-                safety_checker=None,
-                torch_dtype=torch.float16,
+            self.pipe = (
+                StableDiffusionControlNetInpaintPipeline.from_pretrained(
+                    pretrained_model_name_or_path=stable_model_path,
+                    controlnet=controlnet,
+                    safety_checker=None,
+                    torch_dtype=torch.float16,
+                )
             )
 
         self.pipe = get_scheduler_list(pipe=self.pipe, scheduler=scheduler)
@@ -72,10 +76,10 @@ class StableDiffusionControlInpaintNetDepthGenerator:
     ):
         normal_image = image_path["image"].convert("RGB").resize((512, 512))
         mask_image = image_path["mask"].convert("RGB").resize((512, 512))
-        
+
         normal_image = self.load_image(image_path=normal_image)
         mask_image = self.load_image(image_path=mask_image)
-        
+
         control_image = self.controlnet_inpaint_depth(image_path=image_path)
 
         pipe = self.load_model(
@@ -92,7 +96,6 @@ class StableDiffusionControlInpaintNetDepthGenerator:
 
         output = pipe(
             prompt=prompt,
-            
             image=normal_image,
             mask_image=mask_image,
             control_image=control_image,

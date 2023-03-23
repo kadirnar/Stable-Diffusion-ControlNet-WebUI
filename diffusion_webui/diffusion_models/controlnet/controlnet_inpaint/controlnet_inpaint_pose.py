@@ -3,9 +3,11 @@ import numpy as np
 import torch
 from controlnet_aux import OpenposeDetector
 from diffusers import ControlNetModel
-from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import StableDiffusionControlNetInpaintPipeline
 from PIL import Image
 
+from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint.pipeline_stable_diffusion_controlnet_inpaint import (
+    StableDiffusionControlNetInpaintPipeline,
+)
 from diffusion_webui.utils.model_list import (
     controlnet_pose_model_list,
     stable_inpiant_model_list,
@@ -28,11 +30,13 @@ class StableDiffusionControlNetInpaintPoseGenerator:
                 controlnet_model_path, torch_dtype=torch.float16
             )
 
-            self.pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained(
-                pretrained_model_name_or_path=stable_model_path,
-                controlnet=controlnet,
-                safety_checker=None,
-                torch_dtype=torch.float16,
+            self.pipe = (
+                StableDiffusionControlNetInpaintPipeline.from_pretrained(
+                    pretrained_model_name_or_path=stable_model_path,
+                    controlnet=controlnet,
+                    safety_checker=None,
+                    torch_dtype=torch.float16,
+                )
             )
 
         self.pipe = get_scheduler_list(pipe=self.pipe, scheduler=scheduler)
@@ -40,12 +44,12 @@ class StableDiffusionControlNetInpaintPoseGenerator:
         self.pipe.enable_xformers_memory_efficient_attention()
 
         return self.pipe
-    
+
     def load_image(self, image_path):
         image = np.array(image_path)
         image = Image.fromarray(image)
         return image
-    
+
     def controlnet_pose_inpaint(self, image_path: str):
         openpose = OpenposeDetector.from_pretrained("lllyasviel/ControlNet")
 
@@ -71,10 +75,10 @@ class StableDiffusionControlNetInpaintPoseGenerator:
     ):
         normal_image = image_path["image"].convert("RGB").resize((512, 512))
         mask_image = image_path["mask"].convert("RGB").resize((512, 512))
-        
+
         normal_image = self.load_image(image_path=normal_image)
         mask_image = self.load_image(image_path=mask_image)
-        
+
         controlnet_image = self.controlnet_pose_inpaint(image_path=image_path)
 
         pipe = self.load_model(

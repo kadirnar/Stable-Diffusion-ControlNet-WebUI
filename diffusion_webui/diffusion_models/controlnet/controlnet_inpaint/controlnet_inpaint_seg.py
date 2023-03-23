@@ -200,11 +200,12 @@ class StableDiffusionControlNetInpaintSegGenerator:
         self.pipe.enable_xformers_memory_efficient_attention()
 
         return self.pipe
-    
+
     def load_image(self, image_path):
         image = np.array(image_path)
         image = Image.fromarray(image)
         return image
+
     def controlnet_seg_inpaint(self, image_path: str):
         image_processor = AutoImageProcessor.from_pretrained(
             "openmmlab/upernet-convnext-small"
@@ -252,10 +253,10 @@ class StableDiffusionControlNetInpaintSegGenerator:
 
         normal_image = image_path["image"].convert("RGB").resize((512, 512))
         mask_image = image_path["mask"].convert("RGB").resize((512, 512))
-        
+
         normal_image = self.load_image(image_path=normal_image)
         mask_image = self.load_image(image_path=mask_image)
-        
+
         controlnet_image = self.controlnet_seg_inpaint(image_path=image_path)
 
         pipe = self.load_model(

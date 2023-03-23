@@ -49,3 +49,6 @@ from diffusion_webui.diffusion_models.stable_diffusion.inpaint_app import (
 from diffusion_webui.diffusion_models.stable_diffusion.text2img_app import (
     StableDiffusionText2ImageGenerator,
 )
+from diffusion_webui.upscaler_models.codeformer_upscaler import (
+    CodeformerUpscalerGenerator,
+)
