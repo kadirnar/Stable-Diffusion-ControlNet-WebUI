@@ -3,7 +3,10 @@ import torch
 from diffusers import StableDiffusionPipeline
 
 from diffusion_webui.utils.model_list import stable_model_list
-from diffusion_webui.utils.scheduler_list import get_scheduler_list
+from diffusion_webui.utils.scheduler_list import (
+    SCHEDULER_LIST,
+    get_scheduler_list,
+)
 
 
 class StableDiffusionText2ImageGenerator:
@@ -111,14 +114,8 @@ class StableDiffusionText2ImageGenerator:
                             with gr.Column():
 
                                 text2image_scheduler = gr.Dropdown(
-                                    choices=[
-                                        "DDIM",
-                                        "EulerA",
-                                        "Euler",
-                                        "LMS",
-                                        "Heun",
-                                    ],
-                                    value="DDIM",
+                                    choices=SCHEDULER_LIST,
+                                    value=SCHEDULER_LIST[0],
                                     label="Scheduler",
                                 )
 
