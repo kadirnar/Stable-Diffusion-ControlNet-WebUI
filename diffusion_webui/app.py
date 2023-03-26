@@ -22,7 +22,7 @@ from diffusion_webui.helpers import (
 )
 
 
-def main():
+def diffusion_app():
     app = gr.Blocks()
     with app:
         with gr.Row():
@@ -71,4 +71,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    diffusion_app()

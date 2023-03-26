@@ -1,1 +1,3 @@
-__version__ = "2.0.1"
+from diffusion_webui.app import diffusion_app as app
+
+__version__ = "2.1.0"
