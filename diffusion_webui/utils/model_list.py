@@ -5,14 +5,13 @@ stable_model_list = [
     "wavymulder/Analog-Diffusion",
     "dreamlike-art/dreamlike-diffusion-1.0",
     "gsdf/Counterfeit-V2.5",
-    "dreamlike-art/dreamlike-photoreal-2.0"
+    "dreamlike-art/dreamlike-photoreal-2.0",
 ]
 
 controlnet_canny_model_list = [
     "lllyasviel/sd-controlnet-canny",
     "lllyasviel/control_v11p_sd15_canny",
     "thibaud/controlnet-sd21-canny-diffusers",
-
 ]
 
 controlnet_depth_model_list = [

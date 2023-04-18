@@ -1,12 +1,11 @@
-from diffusers import StableDiffusionControlNetPipeline, ControlNetModel
-from diffusers.utils import load_image
-from transformers import pipeline
-from PIL import Image
+import cv2
 import gradio as gr
 import numpy as np
 import torch
-import cv2
-
+from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
+from diffusers.utils import load_image
+from PIL import Image
+from transformers import pipeline
 
 from diffusion_webui.utils.model_list import (
     controlnet_normal_model_list,
@@ -45,8 +44,10 @@ class StableDiffusionControlNetNormalGenerator:
         image_path: str,
     ):
         image = load_image(image_path).convert("RGB")
-        depth_estimator = pipeline("depth-estimation", model ="Intel/dpt-hybrid-midas" )
-        image = depth_estimator(image)['predicted_depth'][0]
+        depth_estimator = pipeline(
+            "depth-estimation", model="Intel/dpt-hybrid-midas"
+        )
+        image = depth_estimator(image)["predicted_depth"][0]
         image = image.numpy()
         image_depth = image.copy()
         image_depth -= np.min(image_depth)
@@ -76,7 +77,9 @@ class StableDiffusionControlNetNormalGenerator:
         scheduler: str,
         seed_generator: int,
     ):
-        pipe = self.load_model(stable_model_path, controlnet_model_path, scheduler)
+        pipe = self.load_model(
+            stable_model_path, controlnet_model_path, scheduler
+        )
         image = self.controlnet_normal(image_path)
 
         if seed_generator == 0:
@@ -84,7 +87,7 @@ class StableDiffusionControlNetNormalGenerator:
             generator = torch.manual_seed(random_seed)
         else:
             generator = torch.manual_seed(seed_generator)
- 
+
         output = pipe(
             prompt=prompt,
             image=image,
@@ -173,7 +176,7 @@ class StableDiffusionControlNetNormalGenerator:
                     ).style(grid=(1, 2))
 
             controlnet_normal_predict.click(
-                fn=StableDiffusionControlNetCannyGenerator().generate_image,
+                fn=StableDiffusionControlNetNormalGenerator().generate_image,
                 inputs=[
                     controlnet_normal_image_file,
                     controlnet_normal_stable_model_id,

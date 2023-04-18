@@ -4,7 +4,10 @@ from controlnet_aux import MLSDdetector
 from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
 from PIL import Image
 
-from diffusion_webui.utils.model_list import stable_model_list, controlnet_mlsd_model_list
+from diffusion_webui.utils.model_list import (
+    controlnet_mlsd_model_list,
+    stable_model_list,
+)
 from diffusion_webui.utils.scheduler_list import (
     SCHEDULER_LIST,
     get_scheduler_list,
@@ -125,11 +128,12 @@ class StableDiffusionControlNetMLSDGenerator:
 
                         with gr.Row():
                             with gr.Column():
-                                controlnet_mlsd_controlnet_model_id = gr.Dropdown(
-                                    choices=controlnet_mlsd_model_list,
-                                    value=controlnet_mlsd_model_list[0],
-                                    label="ControlNet Model Id",
-                                
+                                controlnet_mlsd_controlnet_model_id = (
+                                    gr.Dropdown(
+                                        choices=controlnet_mlsd_model_list,
+                                        value=controlnet_mlsd_model_list[0],
+                                        label="ControlNet Model Id",
+                                    )
                                 )
                                 controlnet_mlsd_scheduler = gr.Dropdown(
                                     choices=SCHEDULER_LIST,

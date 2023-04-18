@@ -13,13 +13,13 @@ from diffusion_webui import (
     StableDiffusionControlNetInpaintScribbleGenerator,
     StableDiffusionControlNetInpaintSegGenerator,
     StableDiffusionControlNetMLSDGenerator,
+    StableDiffusionControlNetNormalGenerator,
     StableDiffusionControlNetPoseGenerator,
     StableDiffusionControlNetScribbleGenerator,
     StableDiffusionControlNetSegGenerator,
     StableDiffusionImage2ImageGenerator,
     StableDiffusionInpaintGenerator,
     StableDiffusionText2ImageGenerator,
-    StableDiffusionControlNetNormalGenerator,
 )
 
 

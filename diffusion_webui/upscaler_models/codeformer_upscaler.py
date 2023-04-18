@@ -1,5 +1,4 @@
 import gradio as gr
-from codeformer.app import inference_app
 
 
 class CodeformerUpscalerGenerator:
@@ -11,6 +10,7 @@ class CodeformerUpscalerGenerator:
         upscale: int,
         codeformer_fidelity: int,
     ):
+        from codeformer.app import inference_app
 
         pipe = inference_app(
             image=image_path,
