@@ -1,6 +1,6 @@
 import gradio as gr
 
-from diffusion_webui.helpers import (
+from diffusion_webui import (
     CodeformerUpscalerGenerator,
     StableDiffusionControlInpaintNetDepthGenerator,
     StableDiffusionControlNetCannyGenerator,
@@ -19,6 +19,7 @@ from diffusion_webui.helpers import (
     StableDiffusionImage2ImageGenerator,
     StableDiffusionInpaintGenerator,
     StableDiffusionText2ImageGenerator,
+    StableDiffusionControlNetNormalGenerator,
 )
 
 
@@ -46,6 +47,8 @@ def diffusion_app():
                         StableDiffusionControlNetPoseGenerator.app()
                     with gr.Tab("Scribble"):
                         StableDiffusionControlNetScribbleGenerator.app()
+                    with gr.Tab("Normal"):
+                        StableDiffusionControlNetNormalGenerator.app()
                     with gr.Tab("Seg"):
                         StableDiffusionControlNetSegGenerator.app()
                 with gr.Tab("ControlNet Inpaint"):
