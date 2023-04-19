@@ -2,11 +2,16 @@ from diffusion_webui.diffusion_models.controlnet import (
     StableDiffusionControlNetCannyGenerator,
     StableDiffusionControlNetDepthGenerator,
     StableDiffusionControlNetHEDGenerator,
+    StableDiffusionControlNetLineArtAnimeGenerator,
+    StableDiffusionControlNetLineArtGenerator,
     StableDiffusionControlNetMLSDGenerator,
     StableDiffusionControlNetNormalGenerator,
+    StableDiffusionControlNetPix2PixGenerator,
     StableDiffusionControlNetPoseGenerator,
     StableDiffusionControlNetScribbleGenerator,
     StableDiffusionControlNetSegGenerator,
+    StableDiffusionControlNetShuffleGenerator,
+    StableDiffusionControlNetSoftEdgeGenerator,
 )
 from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint import (
     StableDiffusionControlInpaintNetDepthGenerator,
@@ -24,4 +29,4 @@ from diffusion_webui.diffusion_models.stable_diffusion import (
 )
 from diffusion_webui.upscaler_models import CodeformerUpscalerGenerator
 
-__version__ = "2.3.0"
+__version__ = "2.4.0"
