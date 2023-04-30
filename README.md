@@ -7,7 +7,7 @@
 <div>
     <a href="https://pepy.tech/project/diffusion-webui"><img src="https://pepy.tech/badge/diffusion-webui" alt="downloads"></a>
     <a href="https://badge.fury.io/py/diffusion-webui"><img src="https://badge.fury.io/py/diffusion-webui.svg" alt="pypi version"></a>
-    <a href="https://huggingface.co/spaces/ArtGAN/Stable-Diffusion-ControlNet-WebUI"><img src="https://img.shields.io/badge/%20HuggingFace%20-Demo-blue.svg" alt="HuggingFace Spaces"></a>
+    <a href="https://huggingface.co/spaces/ArtGAN/Stable-Diffusion-ControlNet-WebUI"><img src="https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-sm.svg" alt="HuggingFace Spaces"></a>
 
 </div>
 </div>
