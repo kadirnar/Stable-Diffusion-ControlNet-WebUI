@@ -1,4 +1,4 @@
-from diffusion_webui.diffusion_models.controlnet.controlnet_canny import (
+from diffusion_webui.diffusion_models.controlnet.controlnet_pipeline import (
     StableDiffusionControlNetCannyGenerator,
 )
 from diffusion_webui.diffusion_models.controlnet.controlnet_depth import (

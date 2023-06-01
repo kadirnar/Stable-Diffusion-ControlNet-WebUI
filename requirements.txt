@@ -6,3 +6,4 @@ diffusers
 imageio
 gradio
 triton
+controlnet_aux
