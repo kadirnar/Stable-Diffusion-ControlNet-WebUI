@@ -13,7 +13,7 @@ from diffusion_webui.diffusion_models.controlnet import (
     StableDiffusionControlNetShuffleGenerator,
     StableDiffusionControlNetSoftEdgeGenerator,
 )
-from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint import (
+from diffusion_webui.diffusion_models.controlnet.pipeline import (
     StableDiffusionControlInpaintNetDepthGenerator,
     StableDiffusionControlNetInpaintCannyGenerator,
     StableDiffusionControlNetInpaintHedGenerator,
