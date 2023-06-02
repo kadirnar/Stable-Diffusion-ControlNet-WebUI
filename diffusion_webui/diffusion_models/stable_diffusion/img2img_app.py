@@ -5,8 +5,8 @@ from PIL import Image
 
 from diffusion_webui.utils.model_list import stable_model_list
 from diffusion_webui.utils.scheduler_list import (
-    SCHEDULER_LIST,
-    get_scheduler_list,
+    SCHEDULER_MAPPING,
+    get_scheduler,
 )
 
 
@@ -20,7 +20,7 @@ class StableDiffusionImage2ImageGenerator:
                 model_path, safety_checker=None, torch_dtype=torch.float16
             )
 
-        self.pipe = get_scheduler_list(pipe=self.pipe, scheduler=scheduler)
+        self.pipe = get_scheduler(pipe=self.pipe, scheduler=scheduler)
         self.pipe.to("cuda")
         self.pipe.enable_xformers_memory_efficient_attention()
 
@@ -107,10 +107,10 @@ class StableDiffusionImage2ImageGenerator:
                         with gr.Row():
                             with gr.Column():
                                 image2image_scheduler = gr.Dropdown(
-                                    choices=SCHEDULER_LIST,
-                                    value=SCHEDULER_LIST[0],
+                                    choices=list(SCHEDULER_MAPPING.keys()),
+                                    value=list(SCHEDULER_MAPPING.keys())[0],
                                     label="Scheduler",
-                                )
+                            )
                                 image2image_num_images_per_prompt = gr.Slider(
                                     minimum=1,
                                     maximum=30,

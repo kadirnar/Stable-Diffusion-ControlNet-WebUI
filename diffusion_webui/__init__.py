@@ -1,32 +1,17 @@
-from diffusion_webui.diffusion_models.controlnet import (
-    StableDiffusionControlNetCannyGenerator,
-    StableDiffusionControlNetDepthGenerator,
-    StableDiffusionControlNetHEDGenerator,
-    StableDiffusionControlNetLineArtAnimeGenerator,
-    StableDiffusionControlNetLineArtGenerator,
-    StableDiffusionControlNetMLSDGenerator,
-    StableDiffusionControlNetNormalGenerator,
-    StableDiffusionControlNetPix2PixGenerator,
-    StableDiffusionControlNetPoseGenerator,
-    StableDiffusionControlNetScribbleGenerator,
-    StableDiffusionControlNetSegGenerator,
-    StableDiffusionControlNetShuffleGenerator,
-    StableDiffusionControlNetSoftEdgeGenerator,
+from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint_pipeline import (
+    StableDiffusionControlNetInpaintGenerator,
 )
-from diffusion_webui.diffusion_models.controlnet.pipeline import (
-    StableDiffusionControlInpaintNetDepthGenerator,
-    StableDiffusionControlNetInpaintCannyGenerator,
-    StableDiffusionControlNetInpaintHedGenerator,
-    StableDiffusionControlNetInpaintMlsdGenerator,
-    StableDiffusionControlNetInpaintPoseGenerator,
-    StableDiffusionControlNetInpaintScribbleGenerator,
-    StableDiffusionControlNetInpaintSegGenerator,
+from diffusion_webui.diffusion_models.controlnet.controlnet_pipeline import (
+    StableDiffusionControlNetGenerator,
 )
-from diffusion_webui.diffusion_models.stable_diffusion import (
+from diffusion_webui.diffusion_models.stable_diffusion.img2img_app import (
     StableDiffusionImage2ImageGenerator,
+)
+from diffusion_webui.diffusion_models.stable_diffusion.inpaint_app import (
     StableDiffusionInpaintGenerator,
+)
+from diffusion_webui.diffusion_models.stable_diffusion.text2img_app import (
     StableDiffusionText2ImageGenerator,
 )
-from diffusion_webui.upscaler_models import CodeformerUpscalerGenerator
 
-__version__ = "2.4.0"
+__version__ = "2.5.0"

@@ -1,47 +1,56 @@
 from diffusers import (
+    DDIMInverseScheduler,
     DDIMScheduler,
+    DDPMScheduler,
+    DEISMultistepScheduler,
+    DPMSolverMultistepInverseScheduler,
+    DPMSolverMultistepScheduler,
+    DPMSolverSinglestepScheduler,
     EulerAncestralDiscreteScheduler,
     EulerDiscreteScheduler,
     HeunDiscreteScheduler,
-    LMSDiscreteScheduler,
+    IPNDMScheduler,
+    KarrasVeScheduler,
+    KDPM2AncestralDiscreteScheduler,
+    KDPM2DiscreteScheduler,
+    PNDMScheduler,
+    RePaintScheduler,
+    SchedulerMixin,
+    ScoreSdeVeScheduler,
+    UnCLIPScheduler,
     UniPCMultistepScheduler,
+    VQDiffusionScheduler,
 )
 
-SCHEDULER_LIST = [
-    "DDIM",
-    "EulerA",
-    "Euler",
-    "LMS",
-    "Heun",
-    "UniPC",
-]
+SCHEDULER_MAPPING = {
+    "DDIM": DDIMScheduler,
+    "DDIMInverse": DDIMInverseScheduler,
+    "DDPMScheduler": DDPMScheduler,
+    "DEISMultistep": DEISMultistepScheduler,
+    "DPMSolverMultistepInverse": DPMSolverMultistepInverseScheduler,
+    "DPMSolverMultistep": DPMSolverMultistepScheduler,
+    "DPMSolverSinglestep": DPMSolverSinglestepScheduler,
+    "EulerAncestralDiscrete": EulerAncestralDiscreteScheduler,
+    "EulerDiscrete": EulerDiscreteScheduler,
+    "HeunDiscrete": HeunDiscreteScheduler,
+    "IPNDMScheduler": IPNDMScheduler,
+    "KarrasVe": KarrasVeScheduler,
+    "KDPM2AncestralDiscrete": KDPM2AncestralDiscreteScheduler,
+    "KDPM2Discrete": KDPM2DiscreteScheduler,
+    "PNDMScheduler": PNDMScheduler,
+    "RePaint": RePaintScheduler,
+    "ScoreSdeVe": ScoreSdeVeScheduler,
+    "UnCLIP": UnCLIPScheduler,
+    "UniPCMultistep": UniPCMultistepScheduler,
+    "VQDiffusion": VQDiffusionScheduler,
+}
 
 
-def get_scheduler_list(pipe, scheduler):
-    if scheduler == SCHEDULER_LIST[0]:
-        pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
-
-    elif scheduler == SCHEDULER_LIST[1]:
-        pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(
-            pipe.scheduler.config
-        )
-
-    elif scheduler == SCHEDULER_LIST[2]:
-        pipe.scheduler = EulerDiscreteScheduler.from_config(
-            pipe.scheduler.config
-        )
-
-    elif scheduler == SCHEDULER_LIST[3]:
-        pipe.scheduler = LMSDiscreteScheduler.from_config(pipe.scheduler.config)
-
-    elif scheduler == SCHEDULER_LIST[4]:
-        pipe.scheduler = HeunDiscreteScheduler.from_config(
-            pipe.scheduler.config
-        )
-
-    elif scheduler == SCHEDULER_LIST[5]:
-        pipe.scheduler = UniPCMultistepScheduler.from_config(
-            pipe.scheduler.config
-        )
+def get_scheduler(pipe, scheduler_name):
+    if scheduler_name in SCHEDULER_MAPPING:
+        SchedulerClass = SCHEDULER_MAPPING[scheduler_name]
+        pipe.scheduler = SchedulerClass.from_config(pipe.scheduler.config)
+    else:
+        raise ValueError(f"Invalid scheduler name {scheduler_name}")
 
     return pipe

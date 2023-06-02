@@ -5,5 +5,5 @@ controlnet_aux
 diffusers
 imageio
 gradio
-triton
 controlnet_aux
+mediapipe
