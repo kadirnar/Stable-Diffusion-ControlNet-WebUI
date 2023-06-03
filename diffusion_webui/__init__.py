@@ -1,16 +1,16 @@
-from diffusion_webui.diffusion_models.controlnet.controlnet_inpaint_pipeline import (
+from diffusion_webui.diffusion_models.controlnet_inpaint_pipeline import (
     StableDiffusionControlNetInpaintGenerator,
 )
-from diffusion_webui.diffusion_models.controlnet.controlnet_pipeline import (
+from diffusion_webui.diffusion_models.controlnet_pipeline import (
     StableDiffusionControlNetGenerator,
 )
-from diffusion_webui.diffusion_models.stable_diffusion.img2img_app import (
+from diffusion_webui.diffusion_models.img2img_app import (
     StableDiffusionImage2ImageGenerator,
 )
-from diffusion_webui.diffusion_models.stable_diffusion.inpaint_app import (
+from diffusion_webui.diffusion_models.inpaint_app import (
     StableDiffusionInpaintGenerator,
 )
-from diffusion_webui.diffusion_models.stable_diffusion.text2img_app import (
+from diffusion_webui.diffusion_models.text2img_app import (
     StableDiffusionText2ImageGenerator,
 )
 

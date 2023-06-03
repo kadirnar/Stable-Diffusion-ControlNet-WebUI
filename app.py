@@ -26,7 +26,7 @@ def diffusion_app():
                     StableDiffusionControlNetInpaintGenerator.app()
 
     app.queue(concurrency_count=1)
-    app.launch(debug=False, enable_queue=True)
+    app.launch(debug=True, enable_queue=True)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import gradio as gr
 import torch
-from diffusers import StableDiffusionPipeline
+from diffusers import StableDiffusionImg2ImgPipeline
+from PIL import Image
 
 from diffusion_webui.utils.model_list import stable_model_list
 from diffusion_webui.utils.scheduler_list import (
@@ -9,17 +10,13 @@ from diffusion_webui.utils.scheduler_list import (
 )
 
 
-class StableDiffusionText2ImageGenerator:
+class StableDiffusionImage2ImageGenerator:
     def __init__(self):
         self.pipe = None
 
-    def load_model(
-        self,
-        model_path,
-        scheduler,
-    ):
+    def load_model(self, model_path, scheduler):
         if self.pipe is None:
-            self.pipe = StableDiffusionPipeline.from_pretrained(
+            self.pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
                 model_path, safety_checker=None, torch_dtype=torch.float16
             )
 
@@ -31,6 +28,7 @@ class StableDiffusionText2ImageGenerator:
 
     def generate_image(
         self,
+        image_path: str,
         model_path: str,
         prompt: str,
         negative_prompt: str,
@@ -38,24 +36,23 @@ class StableDiffusionText2ImageGenerator:
         scheduler: str,
         guidance_scale: int,
         num_inference_step: int,
-        height: int,
-        width: int,
         seed_generator=0,
     ):
         pipe = self.load_model(
             model_path=model_path,
             scheduler=scheduler,
         )
+
         if seed_generator == 0:
             random_seed = torch.randint(0, 1000000, (1,))
             generator = torch.manual_seed(random_seed)
         else:
             generator = torch.manual_seed(seed_generator)
 
+        image = Image.open(image_path)
         images = pipe(
-            prompt=prompt,
-            height=height,
-            width=width,
+            prompt,
+            image=image,
             negative_prompt=negative_prompt,
             num_images_per_prompt=num_images_per_prompt,
             num_inference_steps=num_inference_step,
@@ -69,98 +66,88 @@ class StableDiffusionText2ImageGenerator:
         with gr.Blocks():
             with gr.Row():
                 with gr.Column():
-                    text2image_prompt = gr.Textbox(
+                    image2image_image_file = gr.Image(
+                        type="filepath", label="Image"
+                    ).style(height=260)
+
+                    image2image_prompt = gr.Textbox(
                         lines=1,
                         placeholder="Prompt",
                         show_label=False,
                     )
 
-                    text2image_negative_prompt = gr.Textbox(
+                    image2image_negative_prompt = gr.Textbox(
                         lines=1,
                         placeholder="Negative Prompt",
                         show_label=False,
                     )
+
                     with gr.Row():
                         with gr.Column():
-                            text2image_model_path = gr.Dropdown(
+                            image2image_model_path = gr.Dropdown(
                                 choices=stable_model_list,
                                 value=stable_model_list[0],
-                                label="Text-Image Model Id",
+                                label="Stable Model Id",
                             )
 
-                            text2image_guidance_scale = gr.Slider(
+                            image2image_guidance_scale = gr.Slider(
                                 minimum=0.1,
                                 maximum=15,
                                 step=0.1,
                                 value=7.5,
                                 label="Guidance Scale",
                             )
-
-                            text2image_num_inference_step = gr.Slider(
+                            image2image_num_inference_step = gr.Slider(
                                 minimum=1,
                                 maximum=100,
                                 step=1,
                                 value=50,
                                 label="Num Inference Step",
                             )
-                            text2image_num_images_per_prompt = gr.Slider(
-                                minimum=1,
-                                maximum=30,
-                                step=1,
-                                value=1,
-                                label="Number Of Images",
-                            )
                         with gr.Row():
                             with gr.Column():
-                                text2image_scheduler = gr.Dropdown(
+                                image2image_scheduler = gr.Dropdown(
                                     choices=list(SCHEDULER_MAPPING.keys()),
                                     value=list(SCHEDULER_MAPPING.keys())[0],
                                     label="Scheduler",
-                            )
-
-                                text2image_height = gr.Slider(
-                                    minimum=128,
-                                    maximum=1280,
-                                    step=32,
-                                    value=512,
-                                    label="Image Height",
+                                )
+                                image2image_num_images_per_prompt = gr.Slider(
+                                    minimum=1,
+                                    maximum=30,
+                                    step=1,
+                                    value=1,
+                                    label="Number Of Images",
                                 )
 
-                                text2image_width = gr.Slider(
-                                    minimum=128,
-                                    maximum=1280,
-                                    step=32,
-                                    value=512,
-                                    label="Image Width",
-                                )
-                                text2image_seed_generator = gr.Slider(
-                                    label="Seed(0 for random)",
+                                image2image_seed_generator = gr.Slider(
                                     minimum=0,
                                     maximum=1000000,
+                                    step=1,
                                     value=0,
+                                    label="Seed(0 for random)",
                                 )
-                    text2image_predict = gr.Button(value="Generator")
+
+                    image2image_predict_button = gr.Button(value="Generator")
 
                 with gr.Column():
                     output_image = gr.Gallery(
                         label="Generated images",
                         show_label=False,
                         elem_id="gallery",
-                    ).style(grid=(1, 2), height=200)
+                    ).style(grid=(1, 2))
 
-            text2image_predict.click(
-                fn=StableDiffusionText2ImageGenerator().generate_image,
-                inputs=[
-                    text2image_model_path,
-                    text2image_prompt,
-                    text2image_negative_prompt,
-                    text2image_num_images_per_prompt,
-                    text2image_scheduler,
-                    text2image_guidance_scale,
-                    text2image_num_inference_step,
-                    text2image_height,
-                    text2image_width,
-                    text2image_seed_generator,
-                ],
-                outputs=output_image,
-            )
+        image2image_predict_button.click(
+            fn=StableDiffusionImage2ImageGenerator().generate_image,
+            inputs=[
+                image2image_image_file,
+                image2image_model_path,
+                image2image_prompt,
+                image2image_negative_prompt,
+                image2image_num_images_per_prompt,
+                image2image_scheduler,
+                image2image_guidance_scale,
+                image2image_num_inference_step,
+                image2image_seed_generator,
+            ],
+            outputs=[output_image],
+        )

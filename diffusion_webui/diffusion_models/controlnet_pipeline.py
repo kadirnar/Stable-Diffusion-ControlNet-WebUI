@@ -3,7 +3,7 @@ import torch
 from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
 from PIL import Image
 
-from diffusion_webui.diffusion_models.controlnet.base_controlnet_pipeline import (
+from diffusion_webui.diffusion_models.base_controlnet_pipeline import (
     ControlnetPipeline,
 )
 from diffusion_webui.utils.model_list import (
@@ -33,7 +33,7 @@ class StableDiffusionControlNetGenerator(ControlnetPipeline):
                 torch_dtype=torch.float16,
             )
 
-        self.pipe = get_scheduler(pipe=self.pipe, scheduler_name=scheduler)
+        self.pipe = get_scheduler(pipe=self.pipe, scheduler=scheduler)
         self.pipe.to("cuda")
         self.pipe.enable_xformers_memory_efficient_attention()
 
@@ -86,7 +86,7 @@ class StableDiffusionControlNetGenerator(ControlnetPipeline):
             prompt=prompt,
             height=height,
             width=width,
-            controlnet_conditioning_scale=controlnet_conditioning_scale,
+            controlnet_conditioning_scale=float(controlnet_conditioning_scale),
             guess_mode=guess_mode,
             image=controlnet_image,
             negative_prompt=negative_prompt,

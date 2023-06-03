@@ -12,21 +12,10 @@ stable_inpiant_model_list = [
 ]
 
 controlnet_model_list = [
-    #"lllyasviel/sd-controlnet-canny",
     "lllyasviel/control_v11p_sd15_canny",
-    "thibaud/controlnet-sd21-canny-diffusers",
-    #"lllyasviel/sd-controlnet-depth",
     "lllyasviel/control_v11f1p_sd15_depth",
-    "thibaud/controlnet-sd21-depth-diffusers",
-    #"lllyasviel/sd-controlnet-openpose",
     "lllyasviel/control_v11p_sd15_openpose",
-    "thibaud/controlnet-sd21-openpose-diffusers",
-    #"lllyasviel/sd-controlnet-hed",
-    "thibaud/controlnet-sd21-hed-diffusers",
-    #"lllyasviel/sd-controlnet-scribble",
     "lllyasviel/control_v11p_sd15_scribble",
-    "thibaud/controlnet-sd21-scribble-diffusers",
-    #"lllyasviel/sd-controlnet-mlsd",
     "lllyasviel/control_v11p_sd15_mlsd",
     "lllyasviel/control_v11e_sd15_shuffle",
     "lllyasviel/control_v11e_sd15_ip2p",
